@@ -11,7 +11,7 @@ export default function Home({ articles }) {
 
 // inner api
 export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/articles`);
+  const res = await fetch(`${process.env.API_URL}/api/articles`);
   const articles = await res.json();
 
   return {
