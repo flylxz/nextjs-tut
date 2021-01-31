@@ -18,14 +18,8 @@ const article = ({ article }) => {
   );
 };
 
-export const getStaticProps = async (context) => {
-  const res = await fetch(`${server}/api/articles/${context.params.id}`, {
-    method: 'GET',
-    headers: {
-      'User-Agent': '*',
-      Accept: 'application/json; charset=UTF-8',
-    },
-  });
+export const getStaticProps = async ({ params }) => {
+  const res = await fetch(`${server}/api/articles/${params.id}`);
   const article = await res.json();
 
   return {
@@ -34,21 +28,15 @@ export const getStaticProps = async (context) => {
 };
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`${server}/api/articles`, {
-    method: 'GET',
-    headers: {
-      'User-Agent': '*',
-      Accept: 'application/json; charset=UTF-8',
-    },
-  });
+  const res = await fetch(`${server}/api/articles`);
   const articles = await res.json();
 
   const ids = articles.map((article) => article.id);
 
   const paths = ids.map((id) => ({
     params: {
-      //   id: `${id}`,
-      id: id.toString(),
+      id: `${id}`,
+      // id: id.toString(),
     },
   }));
 
